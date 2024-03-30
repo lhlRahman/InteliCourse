@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@clerk/nextjs": "^4.29.9",
     "@prisma/client": "^5.11.0",
     "@react-three/drei": "^9.103.0",
     "@react-three/fiber": "^8.16.1",
