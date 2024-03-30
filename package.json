@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "@clerk/nextjs": "^4.29.9",
+    "@google-cloud/vertexai": "^0.5.0",
+    "@google/generative-ai": "^0.3.1",
     "@prisma/client": "^5.11.0",
     "@react-three/drei": "^9.103.0",
     "@react-three/fiber": "^8.16.1",
