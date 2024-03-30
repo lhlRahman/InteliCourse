@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import styles from "../../../styles/AllCourses.module.scss";
-// import JobsTable from "@/components/ui/JobsTable";
+import CoursesTable from "@/components/ui/CoursesTable";
 import {
   CompletedIcon,
   OnGoingIcon,
@@ -13,7 +13,6 @@ import { useData } from "@/context/DataContext";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { IoMdInformationCircleOutline } from "react-icons/io";
 export const dynamic = "force-dynamic";
-const { signal } = new AbortController();
 
 export default function AllCourses() {
   const [originalItems, setOriginalItems] = useState([]);
@@ -56,7 +55,8 @@ export default function AllCourses() {
 
       if (data.status != 201) {
         addAlert({
-          message: "There was an error fetching jobs. Please reload the page.",
+          message:
+            "There was an error fetching courses. Please reload the page.",
           type: "error",
         });
         setOriginalItems([]);
@@ -109,7 +109,7 @@ export default function AllCourses() {
   }, [user]);
 
   return (
-    <main id={styles.jobs}>
+    <main id={styles.courses}>
       <div className={styles.toggleWrapper}>
         <label className="inline-flex cursor-pointer" style={{ gap: "1rem" }}>
           <input
@@ -134,7 +134,9 @@ export default function AllCourses() {
         {loading && (
           <div className="flex items-center gap-3 fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 p-5 bg-green-200 rounded">
             <AiOutlineLoading3Quarters className="animate-spin text-xl" />
-            <p>Personalizing your job feed based on your bio...</p>
+            <p>
+              Personalizing your Courses feed based on your bio and resume...
+            </p>
           </div>
         )}
 
@@ -178,7 +180,7 @@ export default function AllCourses() {
             {filteredItems.length === 0 && (
               <div className="mt-5 text-center">No Courses Found</div>
             )}
-            {/* <JobsTable items={filteredItems} /> */}
+            <CoursesTable items={filteredItems} />
           </div>
         )}
       </div>
