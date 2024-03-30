@@ -1,0 +1,65 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @db.VarChar(255) @unique
+  firstName String?  @db.VarChar(255)
+  clerkId   String?  @db.VarChar(255) @unique
+  lastName  String?  @db.VarChar(255)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  resume    String?  @db.Text
+  courses   Course[] @relation("JobPoster")
+}
+
+model Course {
+  id          Int      @id @default(autoincrement())
+  creatorId   Int
+  title       String   @db.VarChar(255)
+  description String?  @db.Text
+  imageUrl    String?  @db.VarChar(255)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  completed   Boolean  @default(false)
+  creator     User     @relation(name: "JobPoster", fields: [creatorId], references: [id], onDelete: Cascade)
+  units       Unit[]
+}
+
+model Unit {
+  id          Int       @id @default(autoincrement())
+  courseId    Int
+  name        String    @db.Text
+  description String?   @db.Text // New field for a brief overview
+  course      Course    @relation(fields: [courseId], references: [id])
+  chapters    Chapter[]
+}
+
+model Chapter {
+  id        Int      @id @default(autoincrement())
+  unitId    Int
+  name      String
+  summary   String? @db.Text
+  videoId   String?
+  duration  Int?    // New field for video duration
+  unit      Unit    @relation(fields: [unitId], references: [id])
+  questions Question[]
+}
+
+model Question {
+  id        Int      @id @default(autoincrement())
+  chapterId Int
+  question  String
+  answer    String
+  options   Json    // Changed to JSON for flexibility
+  questionType String @db.VarChar(50) // New field for question type
+  difficultyLevel Int? // New field for difficulty level
+  chapter   Chapter @relation(fields: [chapterId], references: [id])
+}
