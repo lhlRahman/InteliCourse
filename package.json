@@ -30,6 +30,7 @@
   },
   "devDependencies": {
     "autoprefixer": "^10.0.1",
+    "prisma": "^5.10.2",
     "eslint": "^8",
     "eslint-config-next": "14.1.4",
     "postcss": "^8",
