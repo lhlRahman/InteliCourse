@@ -17,6 +17,7 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   resume    String?  @db.Text
+  bio       String   @db.Text
   courses   Course[] @relation("JobPoster")
 }
 
