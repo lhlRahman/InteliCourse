@@ -110,30 +110,25 @@ export default function AllCourses() {
 
   return (
     <main id={styles.jobs}>
-      {!isUserPoster(user) && (
-        <div className={styles.toggleWrapper}>
-          <label className="inline-flex cursor-pointer" style={{ gap: "1rem" }}>
-            <input
-              type="checkbox"
-              value=""
-              onChange={onToggle}
-              className="sr-only peer"
-            />
-            <div className="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+      <div className={styles.toggleWrapper}>
+        <label className="inline-flex cursor-pointer" style={{ gap: "1rem" }}>
+          <input
+            type="checkbox"
+            value=""
+            onChange={onToggle}
+            className="sr-only peer"
+          />
+          <div className="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
 
-            <span
-              className={`${styles.information} flex items-center text-xs italic font-light text-gray-900 dark:text-gray-300`}
-            >
-              <IoMdInformationCircleOutline />
-              {toggle ? (
-                <span>Strengthen current skills</span>
-              ) : (
-                <span>Attain new skills</span>
-              )}
-            </span>
-          </label>
-        </div>
-      )}
+          <span
+            className={`${styles.information} flex items-center text-xs italic font-light text-gray-900 dark:text-gray-300`}
+          >
+            <IoMdInformationCircleOutline />
+
+            <span>Personalized Courses</span>
+          </span>
+        </label>
+      </div>
 
       <div>
         {loading && (

@@ -32,6 +32,7 @@ export const DataProvider = ({ children }) => {
       axios
         .get(`/api/users/getclerk/${userId}`)
         .then((res) => {
+          console.log(res.data.data);
           setUser(res.data.data);
         })
         .catch((err) => {});
