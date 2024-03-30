@@ -11,9 +11,8 @@ datasource db {
 model User {
   id        Int      @id @default(autoincrement())
   email     String   @db.VarChar(255) @unique
-  password  String   @db.VarChar(255) // Assuming internal authentication
-  role      String   @db.VarChar(50) // Simple role management
   firstName String?  @db.VarChar(255)
+  clerkId   String?  @db.VarChar(255) @unique
   lastName  String?  @db.VarChar(255)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -23,16 +22,14 @@ model User {
 
 model Course {
   id          Int      @id @default(autoincrement())
-  posterId    Int
+  creatorId   Int
   title       String   @db.VarChar(255)
   description String?  @db.Text
   imageUrl    String?  @db.VarChar(255)
-  status      String   @db.VarChar(50) // New field for course status
-  category    String?  @db.VarChar(255) // New field for course categorization
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   completed   Boolean  @default(false)
-  creator     User     @relation(name: "JobPoster", fields: [posterId], references: [id], onDelete: Cascade)
+  creator     User     @relation(name: "JobPoster", fields: [creatorId], references: [id], onDelete: Cascade)
   units       Unit[]
 }
 
