@@ -1,13 +1,14 @@
 import { NextResponse } from "next/server";
-import getCourses from "@/lib/db/get-all-courses";
+import getChapterInfo from "@/lib/db/get-chapter-info";
 export const dynamic = "force-dynamic";
 
-export async function GET(req) {
-  if (req.method === "GET") {
+export async function POST(req) {
+  if (req.method === "POST") {
     try {
-      const courses = await getCourses();
+      const { chapterId } = await req.json();
+      const res = await getChapterInfo(chapterId);
 
-      return NextResponse.json({ status: 201, data: courses });
+      return NextResponse.json({ status: 201, data: res });
     } catch (error) {
       return NextResponse.json({
         status: 500,

@@ -4,14 +4,12 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useData } from "@/context/DataContext";
-import { useAuth } from "@clerk/clerk-react";
 import axios from "axios";
 import { MdDeleteForever } from "react-icons/md";
 import Link from "next/link";
 
 export default function CreateCourse() {
-  const auth = useAuth();
-  const { setUser, addAlert } = useData();
+  const { user, addAlert } = useData();
   const [inputs, setInputs] = useState({
     title: "",
     units: [""],
@@ -57,35 +55,36 @@ export default function CreateCourse() {
   };
 
   const handleSubmit = async (e) => {
+    e.preventDefault();
     if (inputs.units.length < 1) {
       addAlert({ message: "Please add at least one unit", type: "error" });
-      e.preventDefault();
       return;
     }
     for (let i = 0; i < inputs.units.length; i++) {
       if (inputs.units[i] === "") {
         addAlert({ message: "Please fill all the units", type: "error" });
-        e.preventDefault();
         return;
       }
     }
 
+    inputs.userId = user.id;
     console.log(inputs);
-    // inputs.clerkId = auth.userId;
-    // inputs.resume = resume;
-    // axios
-    //   .post("/api/users/create", inputs)
-    //   .then((res) => {
-    //     if (res.data.status === 201) {
-    //       setUser(res.data.data);
-    //       window.location.replace("/dashboard");
-    //     } else {
-    //       addAlert({ message: res.data.message, type: "error" });
-    //     }
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
+    await axios
+      .post("/api/courses/create", inputs)
+      .then((res) => {
+        if (res.data.status === 201) {
+          //   addAlert({ message: res.data.message, type: "success" });
+          window.location.replace(
+            `/dashboard/courses/create/chapters/${res.data.data}`
+          );
+        } else {
+          console.log(res.data.message);
+          addAlert({ message: res.data.message, type: "error" });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
@@ -156,18 +155,12 @@ export default function CreateCourse() {
             >
               Add Unit
             </Button>
-            <Link
+            <Button
               className="bg-black text-white px-6 py-2 rounded hover:bg-gray-800 mt-4"
               onClick={(e) => handleSubmit(e)}
-              href={{
-                pathname: "/dashboard/courses/create/chapters",
-                query: {
-                  ...inputs,
-                },
-              }}
             >
               Next
-            </Link>
+            </Button>
           </div>
         </form>
       </div>

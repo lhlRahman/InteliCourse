@@ -34,8 +34,16 @@ export const DataProvider = ({ children }) => {
         .then((res) => {
           setUser(res.data.data);
           console.log(res.data.data);
-          if (!res.data.data && window.location.pathname !== "/complete") {
-            //window.location.replace("/complete");
+          if (
+            !res.data.data &&
+            window.location.pathname !== "/complete" &&
+            window.location.pathname !== "/signin" &&
+            window.location.pathname !== "/signup" &&
+            window.location.pathname !== "/" &&
+            window.location.pathname !== "/about" &&
+            window.location.pathname !== "/contact"
+          ) {
+            window.location.replace("/complete");
           }
         })
         .catch((err) => {});

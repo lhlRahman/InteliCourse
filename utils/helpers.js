@@ -1,6 +1,7 @@
 import { IoMdDoneAll } from "react-icons/io";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import axios from "axios";
+import { z } from "zod";
 
 export const createItemUser = ({
   id,
@@ -187,3 +188,8 @@ export const clampText = (text, max) => {
   }
   return text;
 };
+
+export const createChaptersSchema = z.object({
+  title: z.string().min(3).max(100),
+  units: z.array(z.string()),
+});

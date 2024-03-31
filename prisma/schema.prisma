@@ -15,43 +15,43 @@ model User {
   lastName  String?  @db.VarChar(255)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  resume    String?
-  bio       String
+  resume    String?  @db.Text
+  bio       String   @db.Text
   courses   Course[] @relation("UserCourse")
 }
 
 model Course {
   id          Int      @id @default(autoincrement())
-  creatorId   Int
+  creatorId   Int      
   title       String   @db.VarChar(255)
   description String?
   imageUrl    String?  @db.VarChar(255)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   completed   Boolean  @default(false)
-  creator     User     @relation("UserCourse", fields: [creatorId], references: [id], onDelete: Cascade)
-  units       Unit[]   @relation("courseUnit")
+  creator     User     @relation(name: "UserCourse", fields: [creatorId], references: [id], onDelete: Cascade)
+  units       Unit[]   @relation(name:"courseUnit")
 }
 
 model Unit {
   id          Int       @id @default(autoincrement())
   courseId    Int
-  name        String
-  description String?
-  chapters    Chapter[] @relation("unitChapter")
-  course      Course    @relation("courseUnit", fields: [courseId], references: [id])
+  name        String    @db.Text
+  description String?   @db.Text // New field for a brief overview
+  course      Course    @relation(name:"courseUnit", fields: [courseId], references: [id])
+  chapters    Chapter[] @relation(name:"unitChapter")
 }
 
 model Chapter {
-  id         Int        @id @default(autoincrement())
-  unitId     Int
-  name       String
-  summary    String?
-  videoId    String?
-  duration   Int?
-  videoQuery String?
-  unit       Unit       @relation("unitChapter", fields: [unitId], references: [id])
-  questions  Question[]
+  id        Int      @id @default(autoincrement())
+  unitId    Int
+  name      String
+  summary   String?  @db.Text
+  videoQuery   String?  
+  videoId   String?
+  duration  Int?    // New field for video duration
+  unit      Unit    @relation(name:"unitChapter", fields: [unitId], references: [id])
+  questions Question[]
 }
 
 model Question {
