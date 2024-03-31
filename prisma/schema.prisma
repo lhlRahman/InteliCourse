@@ -18,20 +18,20 @@ model User {
   updatedAt DateTime @updatedAt
   resume    String?  @db.Text
   bio       String   @db.Text
-  courses   Course[] @relation("JobPoster")
+  courses   Course[] @relation("UserCourse")
 }
 
 model Course {
   id          Int      @id @default(autoincrement())
-  creatorId   Int
+  creatorId   Int      
   title       String   @db.VarChar(255)
   description String?  @db.Text
   imageUrl    String?  @db.VarChar(255)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   completed   Boolean  @default(false)
-  creator     User     @relation(name: "JobPoster", fields: [creatorId], references: [id], onDelete: Cascade)
-  units       Unit[]
+  creator     User     @relation(name: "UserCourse", fields: [creatorId], references: [id], onDelete: Cascade)
+  units       Unit[]   @relation(name:"courseUnit")
 }
 
 model Unit {
@@ -39,18 +39,19 @@ model Unit {
   courseId    Int
   name        String    @db.Text
   description String?   @db.Text // New field for a brief overview
-  course      Course    @relation(fields: [courseId], references: [id])
-  chapters    Chapter[]
+  course      Course    @relation(name:"courseUnit", fields: [courseId], references: [id])
+  chapters    Chapter[] @relation(name:"unitChapter")
 }
 
 model Chapter {
   id        Int      @id @default(autoincrement())
   unitId    Int
   name      String
-  summary   String? @db.Text
+  summary   String?  @db.Text
+  videoQuery   String?  
   videoId   String?
   duration  Int?    // New field for video duration
-  unit      Unit    @relation(fields: [unitId], references: [id])
+  unit      Unit    @relation(name:"unitChapter", fields: [unitId], references: [id])
   questions Question[]
 }
 
