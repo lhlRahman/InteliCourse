@@ -4,7 +4,7 @@ import { useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 import styles from "../../../../../styles/CreateChapter.module.scss";
 
-export default function CreateChapter() {
+export default function CreateChapter({ course = { name: "Course Name" } }) {
   const coursDetail = useSearchParams();
 
   const title = coursDetail.get("title");
@@ -32,7 +32,7 @@ export default function CreateChapter() {
           click the Button to confirm and continue
         </div>
       </div>
-      <ConfirmChapters course={course} />
+      {/* <ConfirmChapters course={course} /> */}
     </main>
   );
 }
