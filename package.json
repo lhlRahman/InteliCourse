@@ -29,7 +29,18 @@
     "tailwind-merge": "^2.2.2",
     "tesseract.js": "^2.1.1",
     "three": "^0.163.0",
-    "three-globe": "^2.31.0"
+    "three-globe": "^2.31.0",
+    "ai": "^3.0.9",
+    "@huggingface/inference": "^2.6.4",
+    "@radix-ui/react-avatar": "^1.0.4",
+    "@radix-ui/react-scroll-area": "^1.0.5",
+    "@radix-ui/react-select": "^2.0.0",
+    "cohere-ai": "^7.7.7",
+    "lucide-react": "^0.350.0",
+    "openai": "^4.28.4",
+    "react-markdown": "^9.0.1",
+    "tailwindcss-animate": "^1.0.7"
+
   },
   "devDependencies": {
     "autoprefixer": "^10.0.1",

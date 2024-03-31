@@ -3,7 +3,7 @@
 "use client";
 import { useState } from "react";
 import { createWorker } from "tesseract.js";
-
+import Chat from "@/components/Chat";
 export default function Component() {
   const [fileName, setFileName] = useState('');
   const [textResult, setTextResult] = useState('Nothing yet');
@@ -45,16 +45,7 @@ export default function Component() {
 
   return (
     <div>
-      <input type="file" accept="image/*" onChange={handleFileChange} />
-      {fileName && (
-        <div>
-          <p>Selected File: {fileName}</p>
-          <div>
-            <h2>OCR Results:</h2>
-            <pre>{JSON.stringify(textResult, null, 2)}</pre>
-          </div>
-        </div>
-      )}
+      <Chat></Chat>
     </div>
   );
 }
