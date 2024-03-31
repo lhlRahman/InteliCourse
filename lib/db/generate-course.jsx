@@ -18,7 +18,7 @@ export default async function generateCourse(userId, title, units) {
     let output_units = await strict_output(
       "You are an AI capable of curating course content, coming up with relevant chapter titles, and finding relevant youtube videos for each chapter",
       new Array(units.length).fill(
-        `It is your job to create a course about ${title}. The user has requested to create chapters for each of the units. Then, for each chapter, provide a detailed youtube search query that can be used to find an informative educationalvideo for each chapter. Each query should give an educational informative course in youtube.`
+        `It is your job to create a course about ${title}. The user has requested to create chapters for each of the units. Then, for each chapter, provide a detailed youtube search query that can be used to find an informative educational video for each chapter. Each query should give an educational informative course in youtube.`
       ),
       {
         title: "title of the unit",
@@ -35,6 +35,14 @@ export default async function generateCourse(userId, title, units) {
       }
     );
 
+    const description = await strict_output(
+      "You are an AI capable of generating a course description",
+      `Please provide a course description for a course about ${title}. This description should be concise and informative, providing a brief overview of what the course is about`,
+      {
+        description: "a course description",
+      }
+    );
+
     const course_image = await getUnsplashImage(
       imageSearchTerm.image_search_term
     );
@@ -45,6 +53,7 @@ export default async function generateCourse(userId, title, units) {
       data: {
         creatorId: userId,
         title,
+        description: description.description,
         imageUrl: course_image,
         createdAt: new Date(),
         updatedAt: new Date(),

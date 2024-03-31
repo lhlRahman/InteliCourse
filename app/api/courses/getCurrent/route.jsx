@@ -1,14 +1,14 @@
 import { NextResponse } from "next/server";
-import generateCourse from "@/lib/db/generate-course";
+import getCurrentCourse from "@/lib/db/get-current-course";
 export const dynamic = "force-dynamic";
 
 export async function POST(req) {
   if (req.method === "POST") {
     try {
-      const { userId, title, units } = await req.json();
-      const courseId = await generateCourse(userId, title, units);
+      const { userId } = await req.json();
+      const courses = await getCurrentCourse(userId);
 
-      return NextResponse.json({ status: 201, data: courseId });
+      return NextResponse.json({ status: 201, data: courses });
     } catch (error) {
       return NextResponse.json({
         status: 500,
