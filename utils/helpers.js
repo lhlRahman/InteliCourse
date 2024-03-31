@@ -183,7 +183,7 @@ export const autoCompleteAPI = async (prompt) => {
 
 export const clampText = (text, max) => {
   if (max < 3) return text;
-  if (text.length > max) {
+  if (text?.length > max) {
     return text.substring(0, max - 3) + "...";
   }
   return text;

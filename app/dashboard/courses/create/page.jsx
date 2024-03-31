@@ -12,6 +12,7 @@ export default function CreateCourse() {
     title: "",
     units: [""],
   });
+  const [loading, setLoading] = useState(false);
 
   const handleInputChange = (e) => {
     setInputs({
@@ -64,7 +65,7 @@ export default function CreateCourse() {
         return;
       }
     }
-
+    setLoading(true);
     inputs.userId = user.id;
     console.log(inputs);
     await axios
@@ -81,10 +82,16 @@ export default function CreateCourse() {
       .catch((err) => {
         console.log(err);
       });
+    setLoading(false);
   };
 
   return (
     <div className="bg-[#1a1a1a] pt-24 flex justify-center items-center min-h-screen">
+      {loading && (
+        <div className="fixed w-screen h-screen flex justify-center items-center bg-[#000000b3]">
+          <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-white"></div>
+        </div>
+      )}
       <div
         className="min-w-96 max-w-3xl mx-auto p-6 bg-[#f2f2f2] shadow-lg"
         style={{ borderRadius: "1rem" }}
