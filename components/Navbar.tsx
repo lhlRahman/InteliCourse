@@ -1,45 +1,39 @@
 "use client";
-import React, { useState } from "react";
-import { HoveredLink, Menu, MenuItem, ProductItem } from "./ui/navbar-menu";
-import { cn } from "@/utils/cn";
-import Link from "next/link";
+// "use client";
+import React from "react";
+import { FloatingNavDemo } from "./ui/floating-navbar";
+import { IconHome, IconMessage, IconUser } from "@tabler/icons-react";
 
-export default function Navbar({ className }: { className?: string }) {
-  const [active, setActive] = useState<string | null>(null);
+import { auth } from "@clerk/nextjs";
+
+export default function Navbar() {
+  //  const user = auth();
+
+  const navItems = [
+    {
+      name: "Home",
+      link: "/",
+      icon: <IconHome className="h-4 w-4 text-neutral-500 dark:text-white" />,
+    },
+    {
+      name: "About",
+      link: "/about",
+      icon: <IconUser className="h-4 w-4 text-neutral-500 dark:text-white" />,
+    },
+    {
+      name: "Contact",
+      link: "/contact",
+      icon: (
+        <IconMessage className="h-4 w-4 text-neutral-500 dark:text-white" />
+      ),
+    },
+  ];
   return (
-    <div
-      className={cn("fixed top-10 inset-x-0 max-w-2xl mx-auto z-50", className)}
-    >
-      <Menu setActive={setActive}>
-        <Link href={"/"}>
-          <MenuItem
-            setActive={setActive}
-            active={active}
-            item="Home"
-          ></MenuItem>
-        </Link>
-        <Link href={"/about"}>
-          <MenuItem
-            setActive={setActive}
-            active={active}
-            item="About"
-          ></MenuItem>
-        </Link>
-        <Link href={"/contact"}>
-          <MenuItem
-            setActive={setActive}
-            active={active}
-            item="Contact"
-          ></MenuItem>
-        </Link>
-        <Link href={"/dashboard"}>
-          <MenuItem
-            setActive={setActive}
-            active={active}
-            item="Dashboard"
-          ></MenuItem>
-        </Link>
-      </Menu>
+    <div className="relative  w-full">
+      <FloatingNavDemo
+        navItems={navItems}
+        //authenticated={user.userId != null}
+      />
     </div>
   );
 }
