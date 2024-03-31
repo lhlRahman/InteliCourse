@@ -35,7 +35,7 @@ export const DataProvider = ({ children }) => {
           setUser(res.data.data);
           console.log(res.data.data);
           if (!res.data.data && window.location.pathname !== "/complete") {
-            window.location.replace("/complete");
+            //window.location.replace("/complete");
           }
         })
         .catch((err) => {});
