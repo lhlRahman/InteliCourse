@@ -66,7 +66,7 @@ export default async function getChapterInfo(chapterId) {
       },
     });
 
-    return course;
+    return true;
   } catch (error) {
     throw error;
   } finally {

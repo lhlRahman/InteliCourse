@@ -5,12 +5,16 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import axios from "axios";
 import { useData } from "@/context/DataContext";
+import MultiStepLoader from "@/components/MultiStepLoad";
 
 export default function CreateChapter() {
   const [course, setCourse] = useState({ title: "", units: [] });
   // get the id from the url
   const { id } = useParams();
   const { addAlert } = useData();
+  const [chatperNames, setChapterNames] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [loadedCount, setLoadedCount] = useState(0);
 
   const getCourseById = async () => {
     axios
@@ -35,19 +39,43 @@ export default function CreateChapter() {
       });
   };
 
+  useEffect(() => {
+    if (loadedCount === chatperNames.length) {
+      setLoading(false);
+    }
+  }, [loadedCount]);
+
+  const getAllChaptersInfo = async () => {
+    setLoadedCount(0);
+    setLoading(true);
+    let names = [];
+    let ids = [];
+    // loop through all chapters and get info
+    course.units.forEach(async (unit) => {
+      unit.chapters.forEach(async (chapter) => {
+        names.push({ text: chapter.name });
+        ids.push(chapter.id);
+      });
+    });
+
+    setChapterNames(names);
+
+    for (let i = 0; i < ids.length; i++) {
+      await getChapterInfo(ids[i]);
+    }
+  };
+
   const getChapterInfo = async (chapterId) => {
-    axios
+    await axios
       .post(`/api/chapters/generate`, {
         chapterId: chapterId,
       })
       .then((res) => {
         if (res.data.status === 201) {
-          addAlert({
-            message: "Chapter info retrieved successfully",
-            type: "success",
-          });
+          setLoadedCount((prev) => prev + 1);
           console.log(res.data.data);
         } else {
+          setLoading(false);
           addAlert({
             message: res.data.message,
             type: "error",
@@ -70,6 +98,15 @@ export default function CreateChapter() {
 
   return (
     <div className="bg-[#1a1a1a] min-h-screen py-12 px-4 sm:px-6 lg:px-8 pt-32">
+      {loading && (
+        <MultiStepLoader
+          loading={loading}
+          setLoading={setLoading}
+          loadingStates={chatperNames}
+          currentState={loadedCount}
+          setCurrentState={setLoadedCount}
+        />
+      )}
       <div className="max-w-4xl mx-auto">
         <h1 className="text-4xl font-bold text-white mb-6">{course.title}</h1>
         <div className="bg-[#333333] p-6 rounded-lg mb-6">
@@ -84,7 +121,7 @@ export default function CreateChapter() {
           <Button
             className="bg-blue-600 hover:bg-blue-700 text-white"
             onClick={() => {
-              getChapterInfo(61);
+              getAllChaptersInfo();
             }}
           >
             Finish Course Generation
