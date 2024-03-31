@@ -15,17 +15,28 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FormattedMarkdown from "./format-markdown";
 
 export default function Chat() {
     const [model, setModal] = useState('');
+
+    
+
     const { messages, input, handleInputChange, handleSubmit, isLoading, error } = useChat({
-        api: model
+        api: model,
     });
-    return (
-        <section className="text-zinc-700">
-            <div className="container max-w-lg flex flex-col">
+
+    useEffect(() => {
+        if (model == '/api/gemini') {
+
+        }
+    }
+    , [model]);
+    
+          return (
+        <section className="text-zinc-700 pt-36">
+            <div className="container max-w-lg flex flex-col text-wrap">
                 <div>
                     <h1 className="m-2 text-center font-serif text-2xl font-medium">AI Chatbot</h1>
                 </div>
