@@ -17,10 +17,7 @@ export default async function createUser(user) {
   if (!user.bio) {
     throw new Error("Bio is required");
   }
-
-  if (!user.resume) {
-    user.resume = "";
-  }
+console.log(user);
   try {
     const newUser = await prisma.user.create({
       data: {
@@ -28,6 +25,7 @@ export default async function createUser(user) {
         firstName: user.firstName,
         lastName: user.lastName,
         bio: user.bio,
+        resume: user.resume,
         clerkId: user.clerkId,
         createdAt: new Date(),
         updatedAt: new Date(),
