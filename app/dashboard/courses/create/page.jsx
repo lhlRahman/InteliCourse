@@ -2,11 +2,9 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { useData } from "@/context/DataContext";
 import axios from "axios";
 import { MdDeleteForever } from "react-icons/md";
-import Link from "next/link";
 
 export default function CreateCourse() {
   const { user, addAlert } = useData();
@@ -74,9 +72,7 @@ export default function CreateCourse() {
       .then((res) => {
         if (res.data.status === 201) {
           //   addAlert({ message: res.data.message, type: "success" });
-          window.location.replace(
-            `/dashboard/courses/create/chapters/${res.data.data}`
-          );
+          window.location.replace(`/dashboard/courses/create/${res.data.data}`);
         } else {
           console.log(res.data.message);
           addAlert({ message: res.data.message, type: "error" });
@@ -88,11 +84,11 @@ export default function CreateCourse() {
   };
 
   return (
-    <div
-      className="pt-24 flex justify-center items-center min-h-screen"
-      style={{ background: "#f2f2f2" }}
-    >
-      <div className="min-w-96 max-w-3xl mx-auto p-6 bg-white shadow-lg rounded-lg">
+    <div className="bg-[#1a1a1a] pt-24 flex justify-center items-center min-h-screen">
+      <div
+        className="min-w-96 max-w-3xl mx-auto p-6 bg-[#f2f2f2] shadow-lg"
+        style={{ borderRadius: "1rem" }}
+      >
         <h2 className="text-3xl font-semibold text-center text-gray-800 mb-2">
           Create Course
         </h2>

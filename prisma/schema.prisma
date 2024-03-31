@@ -59,8 +59,6 @@ model Question {
   chapterId       Int
   question        String
   answer          String
-  options         Json
-  questionType    String  @db.VarChar(50)
-  difficultyLevel Int?
+  options         String[]
   chapter         Chapter @relation(fields: [chapterId], references: [id])
 }

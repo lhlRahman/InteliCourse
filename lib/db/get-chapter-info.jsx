@@ -40,6 +40,8 @@ export default async function getChapterInfo(chapterId) {
       chapter.name
     );
 
+    console.log("questions", questions);
+
     await prisma.question.createMany({
       data: questions.map((question) => {
         let options = [
@@ -49,10 +51,11 @@ export default async function getChapterInfo(chapterId) {
           question.option3,
         ];
         options = options.sort(() => Math.random() - 0.5);
+        console.log(options);
         return {
           question: question.question,
           answer: question.answer,
-          options: JSON.stringify(options),
+          options: options,
           chapterId: chapterId,
         };
       }),

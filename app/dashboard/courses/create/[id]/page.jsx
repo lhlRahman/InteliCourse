@@ -76,6 +76,7 @@ export default function CreateChapter() {
           console.log(res.data.data);
         } else {
           setLoading(false);
+          console.log(res.data.message);
           addAlert({
             message: res.data.message,
             type: "error",

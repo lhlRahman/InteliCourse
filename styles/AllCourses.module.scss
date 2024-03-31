@@ -2,8 +2,9 @@
   display: flex;
   padding-top: 8rem;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  background: #1a1a1a;
+  min-height: 100vh;
 
   .information {
     gap: 0.25rem;

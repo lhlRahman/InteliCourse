@@ -12,7 +12,11 @@ export default async function getCourseById(courseId) {
       include: {
         units: {
           include: {
-            chapters: true,
+            chapters: {
+              include: {
+                questions: true,
+              },
+            },
           },
         },
       },
