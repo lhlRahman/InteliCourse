@@ -1,7 +1,6 @@
 generator client {
   provider = "prisma-client-js"
 }
-
 datasource db {
   provider = "postgresql"
   url = env("POSTGRES_PRISMA_URL") // uses connection pooling
@@ -10,9 +9,9 @@ datasource db {
 
 model User {
   id        Int      @id @default(autoincrement())
-  email     String   @db.VarChar(255) @unique
+  email     String   @unique @db.VarChar(255)
   firstName String?  @db.VarChar(255)
-  clerkId   String?  @db.VarChar(255) @unique
+  clerkId   String?  @unique @db.VarChar(255)
   lastName  String?  @db.VarChar(255)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -25,7 +24,7 @@ model Course {
   id          Int      @id @default(autoincrement())
   creatorId   Int      
   title       String   @db.VarChar(255)
-  description String?  @db.Text
+  description String?
   imageUrl    String?  @db.VarChar(255)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
@@ -56,12 +55,12 @@ model Chapter {
 }
 
 model Question {
-  id        Int      @id @default(autoincrement())
-  chapterId Int
-  question  String
-  answer    String
-  options   Json    // Changed to JSON for flexibility
-  questionType String @db.VarChar(50) // New field for question type
-  difficultyLevel Int? // New field for difficulty level
-  chapter   Chapter @relation(fields: [chapterId], references: [id])
+  id              Int     @id @default(autoincrement())
+  chapterId       Int
+  question        String
+  answer          String
+  options         Json
+  questionType    String  @db.VarChar(50)
+  difficultyLevel Int?
+  chapter         Chapter @relation(fields: [chapterId], references: [id])
 }

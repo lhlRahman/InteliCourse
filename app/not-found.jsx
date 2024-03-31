@@ -1,41 +1,51 @@
+
+// app/page.js
 "use client";
-import { useEffect, useState } from "react";
-
+import { useState } from "react";
+import { createWorker } from "tesseract.js";
+import Chat from "@/components/Chat";
 export default function Component() {
-    const [audio, setAudio] = useState(null);
+  const [fileName, setFileName] = useState('');
+  const [textResult, setTextResult] = useState('Nothing yet');
 
-    useEffect(() => {
-        const fetchData = async () => {
-            const data = { text: "I love Joe Biden" };
+  const handleFileChange = async (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      setFileName(file.name);
 
-            try {
-                const response = await fetch(`/api/tts`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(data),
-                });
+      // Initialize a Tesseract Worker
+      const worker = createWorker({
+        logger: (m) => console.log(m), // Log progress
+        // Example of setting a configuration option:
+        // Adjust according to your specific requirements.
+    
+      });
 
-                if (response.ok) {
-                    const audioUrl = await response.json();
-                    setAudio(`data:audio/mpeg;base64,${audioUrl.data}`);
-                } else {
-                    console.error('Fetch error:', response.statusText);
-                }
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
-        };
+      try {
+        await worker.load();
+        await worker.loadLanguage('eng'); // Specify the language
+        await worker.initialize('eng');
+        await worker.setParameters({
+          tessedit_char_whitelist: ' ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789', // Example: Only recognize alphanumeric characters
+        });
 
-        fetchData();
+        // Recognize the text from the image file
+        const { data: { text } } = await worker.recognize(file);
 
-    }, []);
+        setTextResult(text);
 
-    return (
-        <p className="mt-2 text-lg md:text-2xl text-blue-600">
-            Oops! You seem lost.
-            {audio && <audio controls src={audio}>Your browser does not support the audio element.</audio>}
-        </p>
-    );
+        // Terminate the worker after finishing
+        await worker.terminate();
+      } catch (error) {
+        console.error('OCR Error:', error);
+        setTextResult('Failed to recognize text');
+      }
+    }
+  };
+
+  return (
+    <div>
+      <Chat></Chat>
+    </div>
+  );
 }

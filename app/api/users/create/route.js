@@ -6,6 +6,7 @@ export async function POST(req) {
     try {
       const user = await req.json();
       const createduser = await createUser(user);
+      console.log("User created:", createduser);
 
       return NextResponse.json({ status: 201, data: createduser });
     } catch (error) {
