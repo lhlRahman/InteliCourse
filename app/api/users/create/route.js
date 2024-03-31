@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import createUser from "@/lib/db/insert-user-query";
+import createUser from "../../../..//lib/db/insert-user-query";
 
 export async function POST(req) {
   if (req.method === "POST") {

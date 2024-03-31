@@ -1,5 +1,5 @@
 import styles from "../../../styles/SidebarItem.module.scss";
-import { useData } from "@/context/DataContext";
+import { useData } from "../../../context/DataContext";
 
 export default function SidebarItem({ title, Icon, count, link = "/" }) {
   const { activeSidebar, setActiveSidebar } = useData();

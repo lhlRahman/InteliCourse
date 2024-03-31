@@ -3,7 +3,7 @@
 import { useRef } from "react";
 import styles from "../../styles/UploadFile.module.scss";
 import { FaCloudUploadAlt } from "react-icons/fa";
-import { useData } from "@/context/DataContext";
+import { useData } from "../../context/DataContext";
 import { createWorker } from "tesseract.js";
 
 export default function UploadFile({

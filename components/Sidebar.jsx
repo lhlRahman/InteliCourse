@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styles from "../styles/Sidebar.module.scss";
-import { useData } from "@/context/DataContext";
+import { useData } from "../context/DataContext";
 import { FaCaretDown } from "react-icons/fa";
 
 export default function Sidebar({ children }) {

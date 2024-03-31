@@ -2,7 +2,7 @@
 import Sidebar from "../../components/Sidebar";
 import SidebarItem from "../../components/ui/SidebarItem";
 import { MdVolunteerActivism } from "react-icons/md";
-import { useData } from "@/context/DataContext";
+import { useData } from "../../context/DataContext";
 import { FaPlus } from "react-icons/fa";
 import { FaHistory } from "react-icons/fa";
 import { MdLeaderboard } from "react-icons/md";

@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import getChapterInfo from "@/lib/db/get-chapter-info";
+import getChapterInfo from "../../../../lib/db/get-chapter-info";
 export const dynamic = "force-dynamic";
 
 export async function POST(req) {
