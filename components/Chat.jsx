@@ -1,11 +1,11 @@
 "use client";
 
 import { useChat } from "ai/react";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import { Input } from "../components/ui/input";
+import { Button } from "../components/ui/button";
 import { SendHorizonalIcon } from "lucide-react";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { ScrollArea } from "../components/ui/scroll-area";
+import { Avatar, AvatarFallback, AvatarImage } from "../components/ui/avatar";
 import {
     Select,
     SelectContent,
@@ -14,38 +14,31 @@ import {
     SelectLabel,
     SelectTrigger,
     SelectValue,
-} from "@/components/ui/select";
+} from "../components/ui/select";
 import { useEffect, useState } from "react";
 import FormattedMarkdown from "./format-markdown";
 
-export default function Chat() {
+export default function Chat({prompt}) {
     const [model, setModal] = useState('');
 
     
 
     const { messages, input, handleInputChange, handleSubmit, isLoading, error } = useChat({
         api: model,
+        body: {
+            prompt: prompt,
+        },
     });
-
-    useEffect(() => {
-        if (model == '/api/gemini') {
-
-        }
-    }
-    , [model]);
     
           return (
-        <section className="text-zinc-700 pt-36">
-            <div className="container max-w-lg flex flex-col text-wrap">
-                <div>
-                    <h1 className="m-2 text-center font-serif text-2xl font-medium">AI Chatbot</h1>
-                </div>
+        <section className="text-zinc-700 flex pt-36">
+            <div className=" max-w-sm justify-end flex-col text-wrap">
                 {
                     error && (
                         <div className="text-sm text-red-500 text-center p-2">{error.message}</div>
                     )
                 }
-                <ScrollArea className="mb-2 h-[500px] rounded-md border-2 p-4 border-slate-700">
+                <ScrollArea className="mb-2 h-[400px] rounded-md border-2 p-4 border-slate-700">
                     {messages.map(m => (
                         <div key={m.id} className="flex flex-col">
                             <div className='m-1 whitespace-pre-wrap'>
@@ -87,7 +80,7 @@ export default function Chat() {
                             <SelectContent>
                                 <SelectGroup>
                                     <SelectLabel>Models</SelectLabel>
-                                    <SelectItem value="/api/openai">Openai GPT-3.5</SelectItem>
+                                    <SelectItem value="/api/chatgpt">Openai GPT-3.5</SelectItem>
                                     <SelectItem value="/api/gemini">Google Gemini</SelectItem>
                                     <SelectItem value="/api/cohere">Cohere</SelectItem>
                                     <SelectItem value="/api/huggingface">Open Assistant(HF)</SelectItem>
