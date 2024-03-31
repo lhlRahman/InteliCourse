@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import GetUserByClerkId from "@/lib/db/get-user-by-clerkId";
+import GetUserByClerkId from "../../../../../lib/db/get-user-by-clerkId";
 export const dynamic = "force-dynamic";
 
 export async function GET(req) {

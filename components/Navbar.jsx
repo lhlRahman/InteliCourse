@@ -6,8 +6,8 @@ import { IconHome, IconMessage, IconUser } from "@tabler/icons-react";
 
 import { auth } from "@clerk/nextjs";
 
-export function Navbar() {
-  const user = auth();
+export default function Navbar() {
+//  const user = auth();
 
   const navItems = [
     {
@@ -32,7 +32,7 @@ export function Navbar() {
     <div className="relative  w-full">
       <FloatingNavDemo
         navItems={navItems}
-        authenticated={user.userId != null}
+        //authenticated={user.userId != null}
       />
     </div>
   );
