@@ -1,13 +1,47 @@
 import { useData } from "@/context/DataContext";
 import axios from "axios";
-import { useState } from "react";
+import { useState, useRef } from "react";
+import { FaCirclePlay } from "react-icons/fa6";
 
-export default function Chapter({ course = { units: [] } }) {
+export default function Course({ course = { units: [] } }) {
   const [selected, setSelected] = useState({ unit: 0, chapter: 0 });
   const { addAlert } = useData();
+  const [summaryAudio, setSummaryAudio] = useState(null);
+  const [summaryAudioToggle, setSummaryAudioToggle] = useState(false);
+  const [questionAudio, setQuestionAudio] = useState(null);
+  const [questionAudioToggle, setQuestionAudioToggle] = useState(false);
 
-  const handleSelect = (unit, chapter) => {
+  const summaryRef = useRef(null);
+  const questionRef = useRef(null);
+
+  const handleSelect = async (unit, chapter) => {
     setSelected({ unit, chapter });
+    const summary = await textToSpeech(
+      course.units[unit]?.chapters[chapter]?.summary
+    );
+    const questions = await textToSpeech(
+      course.units[unit]?.chapters[chapter]?.questions
+        .map(({ question, options }) => question + options.join(" "))
+        .join(" ")
+    );
+    setSummaryAudio(summary);
+    console.log(questions);
+    setQuestionAudio(questions);
+  };
+
+  const textToSpeech = async (text) => {
+    const res = await axios.post("/api/tts", { text }).then((res) => {
+      if (res.data.status === 201) {
+        return `data:audio/mpeg;base64,${res.data.data}`;
+      } else {
+        addAlert({
+          message: res.data.message,
+          type: "error",
+        });
+        return null;
+      }
+    });
+    return res;
   };
 
   const completeCourse = (id) => {
@@ -72,15 +106,44 @@ export default function Chapter({ course = { units: [] } }) {
         </div>
         <div className="flex mb-10">
           <div className="flex-1 mr-8">
-            <div className="mb-5">
-              <div />
+            <div className="mb-5"></div>
+            <div className="flex items-center mb-4 gap-2">
+              <h3 className="text-xl font-semibold ">Summary</h3>
+              {summaryAudio && (
+                <FaCirclePlay
+                  className="cursor-pointer"
+                  onClick={() => {
+                    setSummaryAudioToggle(!summaryAudioToggle);
+                    if (summaryAudioToggle) summaryRef.current.pause();
+                    else summaryRef.current.play();
+                  }}
+                />
+              )}
             </div>
-            <h3 className="text-xl font-semibold mb-4">Summary</h3>
             <p className="text-lg">
               {course.units[selected.unit]?.chapters[selected.chapter]?.summary}
             </p>
+            {summaryAudio && (
+              <audio
+                ref={summaryRef}
+                controls
+                src={summaryAudio}
+                style={{ display: "none" }}
+              >
+                Your browser does not support the audio element.
+              </audio>
+            )}
+            {questionAudio && (
+              <audio
+                ref={questionRef}
+                controls
+                src={questionAudio}
+                style={{ display: "none" }}
+              >
+                Your browser does not support the audio element.
+              </audio>
+            )}
             <div>
-              {/* embed youtube video */}
               <iframe
                 className="w-full h-96 mt-8"
                 src={`https://www.youtube.com/embed/${
@@ -95,7 +158,19 @@ export default function Chapter({ course = { units: [] } }) {
             </div>
           </div>
           <div className="w-96">
-            <h3 className="text-xl font-semibold mb-4">Concept Check</h3>
+            <div className="flex items-center mb-4 gap-2">
+              <h3 className="text-xl font-semibold">Concept Check</h3>
+              {questionAudio && (
+                <FaCirclePlay
+                  className="cursor-pointer"
+                  onClick={() => {
+                    setQuestionAudioToggle(!questionAudioToggle);
+                    if (questionAudioToggle) questionRef.current.pause();
+                    else questionRef.current.play();
+                  }}
+                />
+              )}
+            </div>
             {course.units[selected.unit]?.chapters[
               selected.chapter
             ]?.questions.map(({ question, options }, questionIndex) => (
