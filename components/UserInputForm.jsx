@@ -1,3 +1,4 @@
+// UserInputForm.js
 "use client";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -7,18 +8,25 @@ import { useData } from "@/context/DataContext";
 import { useAuth } from "@clerk/clerk-react";
 import axios from "axios";
 import UploadFile from "./ui/UploadFile";
+import { BiLoader } from "react-icons/bi";
 
 export function UserInputForm() {
   const auth = useAuth();
   const { setUser, addAlert } = useData();
   const [isUploadingDone, setIsUploadingDone] = useState(null);
-  const [resume, setResume] = useState(null);
   const [inputs, setInputs] = useState({
     firstName: "",
     lastName: "",
     resume: "",
     bio: "",
   });
+
+  const handleResume = (text) => {
+    setInputs({
+      ...inputs,
+      resume: text,
+    });
+  };
 
   const handleInputChange = (e) => {
     setInputs({
@@ -29,8 +37,11 @@ export function UserInputForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (isUploadingDone !== null && isUploadingDone === false) {
+      return;
+    }
     inputs.clerkId = auth.userId;
-    inputs.resume = resume;
+    console.log(inputs);
     axios
       .post("/api/users/create", inputs)
       .then((res) => {
@@ -125,17 +136,21 @@ export function UserInputForm() {
             Resume
           </label>
           <UploadFile
-            setResume={setResume}
+            handleResume={handleResume}
             setIsUploadingDone={setIsUploadingDone}
             isUploadingDone={isUploadingDone}
           />
         </div>
-        <div className="text-center ">
+        <div className="text-center">
           <Button
             className="bg-black text-white px-6 py-2 rounded hover:bg-gray-800 mt-4"
             onClick={(e) => handleSubmit(e)}
           >
-            Submit
+            {isUploadingDone === false ? (
+              <BiLoader className="w-6 h-6 animate-spin" />
+            ) : (
+              "Submit"
+            )}
           </Button>
         </div>
       </form>

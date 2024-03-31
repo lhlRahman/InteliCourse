@@ -2,51 +2,57 @@
 // app/page.js
 "use client";
 import { useState } from "react";
+import { createWorker } from "tesseract.js";
 
 export default function Component() {
   const [fileName, setFileName] = useState('');
-  const [textResult, setTextResult] = useState('');
+  const [textResult, setTextResult] = useState('Nothing yet');
 
   const handleFileChange = async (event) => {
     const file = event.target.files[0];
     if (file) {
       setFileName(file.name);
+
+      // Initialize a Tesseract Worker
+      const worker = createWorker({
+        logger: (m) => console.log(m), // Log progress
+        // Example of setting a configuration option:
+        // Adjust according to your specific requirements.
+    
+      });
+
       try {
-        const formData = new FormData();
-        formData.append('file', file);
-        const response = await fetch('/api/parsebio', {
-          method: 'POST',
-          body: formData,
+        await worker.load();
+        await worker.loadLanguage('eng'); // Specify the language
+        await worker.initialize('eng');
+        await worker.setParameters({
+          tessedit_char_whitelist: ' ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789', // Example: Only recognize alphanumeric characters
         });
-        if (response.ok) {
-          const data = await response.json();
-          setTextResult(data.data);
-        } else {
-          console.error('Error:', response.statusText);
-        }
+
+        // Recognize the text from the image file
+        const { data: { text } } = await worker.recognize(file);
+
+        setTextResult(text);
+
+        // Terminate the worker after finishing
+        await worker.terminate();
       } catch (error) {
-        console.error('Error posting data to API:', error);
+        console.error('OCR Error:', error);
+        setTextResult('Failed to recognize text');
       }
     }
   };
 
-  const isVideoFile = (fileName) => {
-    return fileName.endsWith('.mp4') || fileName.endsWith('.mov');
-  };
-
-
   return (
     <div>
-      <input type="file" accept="image/*,video/*" onChange={handleFileChange} />
+      <input type="file" accept="image/*" onChange={handleFileChange} />
       {fileName && (
         <div>
           <p>Selected File: {fileName}</p>
-          {isVideoFile(fileName) ? (
-            <video controls src={URL.createObjectURL(new Blob([fileName]))} style={{ maxWidth: '100%', height: 'auto' }} />
-          ) : (
-            <img src={URL.createObjectURL(new Blob([fileName]))} alt="Uploaded" style={{ maxWidth: '100%', height: '90%' }} />
-          )}
-          {textResult && <p>Text Result: {textResult}</p>}
+          <div>
+            <h2>OCR Results:</h2>
+            <pre>{JSON.stringify(textResult, null, 2)}</pre>
+          </div>
         </div>
       )}
     </div>

@@ -1,45 +1,39 @@
 // app/api/parsebio/route.js
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import { createWorker } from 'tesseract.js';
 
 export const runtime = "edge";
 
-// Helper function to convert file information to a GoogleGenerativeAI.Part object
-async function fileToGenerativePart(file) {
-  const data = await file.arrayBuffer();
-  const base64EncodedData = btoa(String.fromCharCode.apply(null, new Uint8Array(data)));
-  return {
-    inlineData: { data: base64EncodedData, mimeType: file.type },
-  };
-}
-
-// POST handler function
+// POST handler function using tesseract.js for OCR
 export async function POST(req) {
   try {
     // Parse the incoming request body
     const formData = await req.formData();
     const file = formData.get('file');
 
-    // Initialize Google Generative AI with the API key
-    const genAI = new GoogleGenerativeAI('AIzaSyAPoDWdkaGlS7JicKYvH-7v6cMKbNc8PxM');
+    // Create a Tesseract.js worker
+    const worker = createWorker({
+      logger: m => console.log(m), // Add logger here to monitor progress
+    });
 
-    // Define the prompt for generative AI
-    const prompt = "Extract and parse all visible text from the provided image. Ensure that the extracted content includes every piece of text visible in the image without omission or addition.";
+    await worker.load();
+    await worker.loadLanguage('eng');
+    await worker.initialize('eng');
 
-    // Prepare the image data
-    const imagePart = await fileToGenerativePart(file);
+    // Convert the uploaded file to a Buffer for Tesseract.js
+    const buffer = await file.arrayBuffer();
+    const imageBuffer = Buffer.from(buffer);
 
-    // Invoke the generative model
-    const model = genAI.getGenerativeModel({ model: "gemini-pro-vision" });
-    const result = await model.generateContent([prompt, imagePart]);
+    // Recognize text from the image
+    const { data: { text } } = await worker.recognize(imageBuffer);
 
-    // Process the result
-    const response = await result.response;
-    const textResult = await response.text();
-    console.log('Text result:', textResult);
+    console.log('Recognized Text:', text);
 
-    // Return the processed result
-    return new Response(JSON.stringify({ status: 201, data: textResult }), {
-      status: 201,
+    // Clean up the worker
+    await worker.terminate();
+
+    // Return the recognized text
+    return new Response(JSON.stringify({ status: 200, data: text }), {
+      status: 200,
       headers: { 'Content-Type': 'application/json' },
     });
   } catch (error) {

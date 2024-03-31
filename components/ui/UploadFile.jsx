@@ -1,77 +1,46 @@
+// UploadFile.js
 "use client";
 import { useRef } from "react";
 import styles from "../../styles/UploadFile.module.scss";
 import { FaCloudUploadAlt } from "react-icons/fa";
 import { useData } from "@/context/DataContext";
-import axios from "axios";
+import { createWorker } from "tesseract.js";
 
 export default function UploadFile({
-  setResume,
+  handleResume,
   setIsUploadingDone,
   isUploadingDone,
 }) {
   const { addAlert } = useData();
   const inputFileRef = useRef(null);
 
-  const onUpload = (event) => {
-    if (event.target.files && event.target.files.length > 0) {
-      const file = new File(
-        [event.target.files[0]],
-        event.target.files[0].name,
-        {
-          type: event.target.files[0].type,
-        }
-      );
-
-      if (file.type !== "application/pdf" && file.type !== "video/mp4") {
-        addAlert({
-          message: "File type not supported.",
-          type: "error",
-        });
-        return;
-      }
-
-      if (file.size > 10000000) {
-        addAlert({
-          message: "File size must be less than 10MB.",
-          type: "error",
-        });
-        return;
-      }
-
-      setIsUploadingDone(false);
-      setResume(null);
-
-      // encode file to base64 string
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-
-      // api call here to do
-      // TODO: upload file to server
-      axios
-        .post("/api/users/create", reader.result)
-        .then((res) => {
-          if (res.data.status === 201) {
-            setIsUploadingDone(true);
-            // TODO
-            setResume(reader.result);
-          } else {
-            setIsUploadingDone(null);
-            setResume(null);
-            addAlert({ message: res.data.message, type: "error" });
-          }
-        })
-        .catch((err) => {
-          setIsUploadingDone(null);
-          setResume(null);
-          console.log(err);
-        });
-    } else {
-      setIsUploadingDone(null);
-      setResume(null);
-      console.error("No file selected.");
+  const handleFileChange = async (event) => {
+    const file = event.target.files[0];
+    if (!file) {
+      return;
     }
-    if (inputFileRef.current) inputFileRef.current.value = "";
+    setIsUploadingDone(false);
+    event.preventDefault();
+    const worker = createWorker({
+      logger: (m) => console.log(m),
+    });
+    try {
+      await worker.load();
+      await worker.loadLanguage("eng");
+      await worker.initialize("eng");
+      const {
+        data: { text },
+      } = await worker.recognize(file);
+      console.log("Recognized Text:", text);
+      handleResume(text); // Set the OCR result to the resume state in the parent component
+      setIsUploadingDone(true);
+    } catch (error) {
+      console.error("OCR Error:", error);
+      setIsUploadingDone(null);
+      addAlert({ message: "Error processing the resume.", type: "error" });
+    } finally {
+      await worker.terminate();
+    }
   };
 
   return (
@@ -106,21 +75,19 @@ export default function UploadFile({
             </p>
           </div>
         )}
-
         <input
           ref={inputFileRef}
           id="dropzone-file"
           type="file"
           className="hidden"
-          accept="image/pdf"
-          onChange={onUpload}
+          onChange={handleFileChange}
         />
       </label>
       <div
         className="flex justify-between text-xs"
         style={{ color: "#9394A5" }}
       >
-        <span className="">Supported: PDF, MP4</span>
+        <span className="">Supported: PDF, PNG, JPG</span>
         <span>Maximum size: 10MB</span>
       </div>
     </div>
