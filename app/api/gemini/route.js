@@ -2,7 +2,7 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 import { GoogleGenerativeAIStream, Message, StreamingTextResponse } from 'ai';
 import { NextResponse } from 'next/server';
 
-const genAI = new GoogleGenerativeAI('AIzaSyAOLtyxLn72u0jb9LMMF7kaQiixvuA1Qxs');
+const genAI = new GoogleGenerativeAI(process.env.GOOGLE);
 
 export const runtime = 'edge';
 
