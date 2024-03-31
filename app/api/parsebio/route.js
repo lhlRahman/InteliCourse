@@ -1,29 +1,16 @@
 // app/api/parsebio/route.js
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import fs from 'fs/promises';
-import path from 'path';
-import os from 'os';
+
 export const runtime = "edge";
 
 // Helper function to convert file information to a GoogleGenerativeAI.Part object
 async function fileToGenerativePart(file) {
-  const tempFilePath = await saveTempFile(file);
-  const data = await fs.readFile(tempFilePath);
-  const base64EncodedData = data.toString('base64');
-  await fs.unlink(tempFilePath);
+  const data = await file.arrayBuffer();
+  const base64EncodedData = btoa(String.fromCharCode.apply(null, new Uint8Array(data)));
   return {
     inlineData: { data: base64EncodedData, mimeType: file.type },
   };
 }
-
-// Helper function to save the uploaded file to a temporary location
-async function saveTempFile(file) {
-    const tempDir = os.tmpdir();
-    const tempFilePath = path.join(tempDir, file.name);
-    const buffer = Buffer.from(await file.arrayBuffer());
-    await fs.writeFile(tempFilePath, buffer);
-    return tempFilePath;
-  }
 
 // POST handler function
 export async function POST(req) {

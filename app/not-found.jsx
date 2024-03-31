@@ -34,6 +34,7 @@ export default function Component() {
     return fileName.endsWith('.mp4') || fileName.endsWith('.mov');
   };
 
+
   return (
     <div>
       <input type="file" accept="image/*,video/*" onChange={handleFileChange} />
