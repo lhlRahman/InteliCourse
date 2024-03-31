@@ -3,6 +3,7 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 import fs from 'fs/promises';
 import path from 'path';
 import os from 'os';
+export const runtime = "edge";
 
 // Helper function to convert file information to a GoogleGenerativeAI.Part object
 async function fileToGenerativePart(file) {
