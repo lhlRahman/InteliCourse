@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useData } from "../../../context/DataContext";
 
-const page = () => {
+const Page = () => {
   const { courseId } = useParams();
   const { addAlert } = useData();
   const [course, setCourse] = useState({ units: [] });
