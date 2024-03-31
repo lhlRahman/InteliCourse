@@ -46,7 +46,7 @@ export default function CreateChapter() {
   }, [loadedCount]);
 
   const getAllChaptersInfo = async () => {
-    setLoadedCount(0);
+    setLoadedC;
     setLoading(true);
     let names = [];
     let ids = [];
