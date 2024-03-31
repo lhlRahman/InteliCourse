@@ -115,7 +115,7 @@ export default function CreateChapter() {
             <CircleIcon className="h-6 w-6 text-blue-500 mr-2" />
             <p className="text-sm">
               We generated chapters for each of your units. Look over them and
-              then click the "Finish Course Generation" button to confirm and
+              then click the Finish Course Generation button to confirm and
               continue.
             </p>
           </div>
