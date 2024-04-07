@@ -89,9 +89,6 @@ export default function AllCourses() {
   };
 
   useEffect(() => {
-    if (!user){
-      window.location.replace("/signin");
-    }
 
     if (originalItems.length > 0 && user && user.bio && user.bio !== "") {
       sortBasedOnRerank();
