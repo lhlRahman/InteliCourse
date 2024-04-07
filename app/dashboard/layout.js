@@ -6,6 +6,7 @@ import { useData } from "../../context/DataContext";
 import { FaPlus } from "react-icons/fa";
 import { FaHistory } from "react-icons/fa";
 import { MdLeaderboard } from "react-icons/md";
+import { Analytics } from "@vercel/analytics/react"
 
 export default function RootLayout({ children }) {
   const { user } = useData();
@@ -39,6 +40,7 @@ export default function RootLayout({ children }) {
         />
       </Sidebar>
       {children}
+      <Analytics/>
     </>
   );
 }
