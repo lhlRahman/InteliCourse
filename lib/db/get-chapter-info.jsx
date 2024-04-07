@@ -1,12 +1,12 @@
 // /api/chapter/getInto
 
 import { PrismaClient } from "@prisma/client";
-import { strict_output } from "@/lib/gpt";
+import { strict_output } from "../../lib/gpt";
 import {
   getQuestionsFromTranscript,
   getTranscript,
   searchYoutube,
-} from "@/lib/youtube";
+} from "../../lib/youtube";
 
 export default async function getChapterInfo(chapterId) {
   const prisma = new PrismaClient();

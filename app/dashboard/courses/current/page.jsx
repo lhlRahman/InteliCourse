@@ -1,14 +1,14 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import styles from "../../../../styles/AllCourses.module.scss";
-import CoursesTable from "@/components/ui/CoursesTable";
+import CoursesTable from "../../../..//components/ui/CoursesTable";
 import {
   CompletedIcon,
   OnGoingIcon,
   createItemPoster,
   isUserPoster,
 } from "../../../../utils/helpers";
-import { useData } from "@/context/DataContext";
+import { useData } from "../../../../context/DataContext";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import axios from "axios";
 export const dynamic = "force-dynamic";

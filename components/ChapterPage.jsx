@@ -1,4 +1,4 @@
-import { useData } from "@/context/DataContext";
+import { useData } from "../context/DataContext";
 import axios from "axios";
 import { useState, useRef } from "react";
 import { FaCirclePlay } from "react-icons/fa6";

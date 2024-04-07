@@ -1,11 +1,10 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import Course from "@/components/ChapterPage";
+import Course from "../../../components/ChapterPage";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useData } from "@/context/DataContext";
-import ChatPopup from "@/components/chatPopup";
+import { useData } from "../../../context/DataContext";
 
 const Page = () => {
   const { courseId } = useParams();

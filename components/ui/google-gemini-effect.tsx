@@ -1,5 +1,6 @@
 "use client";
 import { cn } from "../../utils/cn";
+import { cn } from "../../utils/cn";
 import { motion, MotionValue } from "framer-motion";
 import React from "react";
 
@@ -21,6 +22,8 @@ export const GoogleGeminiEffect = ({
 }) => {
   return (
     <div className={cn("sticky top-80", className)}>
+      <p className="text-4xl w-screen md:text-9xl font-normal pb-4 text-center bg-clip-text text-transparent bg-gradient-to-b from-neutral-100 to-neutral-300">
+        {title || `Learn with IntelliCourse`}
       <p className="text-4xl w-screen md:text-9xl font-normal pb-4 text-center bg-clip-text text-transparent bg-gradient-to-b from-neutral-100 to-neutral-300">
         {title || `Learn with IntelliCourse`}
       </p>

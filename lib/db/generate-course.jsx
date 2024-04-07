@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import { createChaptersSchema } from "../../utils/helpers";
-import { strict_output } from "@/lib/gpt";
-import { getUnsplashImage } from "@/lib/unsplash";
+import { strict_output } from "../../lib/gpt";
+import { getUnsplashImage } from "../../lib/unsplash";
 
 export const fetchCache = "force-no-store";
 

@@ -1,6 +1,5 @@
-import { useData } from "@/context/DataContext";
-import { cn } from "@/utils/cn";
-import { clampText, isUserPoster } from "@/utils/helpers";
+import { cn } from "../../utils/cn";
+import { clampText, isUserPoster } from "../../utils/helpers";
 import React from "react";
 
 export const BentoGrid = ({

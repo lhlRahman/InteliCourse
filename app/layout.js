@@ -1,9 +1,9 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/Navbar";
+import Navbar from "../components/Navbar";
 import { ClerkProvider } from "@clerk/nextjs";
-import { DataProvider } from "@/context/DataContext";
-import AlertWrapper from "@/components/AlertWrapper";
+import { DataProvider } from "../context/DataContext";
+import AlertWrapper from "../components/AlertWrapper";
 
 const inter = Inter({ subsets: ["latin"] });
 

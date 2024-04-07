@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import styles from "../../../styles/AllCourses.module.scss";
-import CoursesTable from "@/components/ui/CoursesTable";
+import CoursesTable from "../../../components/ui/CoursesTable";
 import {
   CompletedIcon,
   OnGoingIcon,
@@ -9,7 +9,7 @@ import {
   isUserPoster,
   rerank,
 } from "../../../utils/helpers";
-import { useData } from "@/context/DataContext";
+import { useData } from "../../../context/DataContext";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { IoMdInformationCircleOutline } from "react-icons/io";
 import axios from "axios";

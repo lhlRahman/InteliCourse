@@ -1,5 +1,5 @@
 "use client";
-import { UserInputForm } from "@/components/UserInputForm";
+import { UserInputForm } from "../../components/UserInputForm";
 
 const Page = () => {
   return (

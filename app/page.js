@@ -1,4 +1,4 @@
-import { GoogleGeminiEffectDemo } from "@/components/ui/googlegemini";
+import { GoogleGeminiEffectDemo } from "../components/ui/googlegemini";
 
 export default function Home() {
   return (

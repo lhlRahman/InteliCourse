@@ -1,10 +1,10 @@
 // UserInputForm.js
 "use client";
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { useData } from "@/context/DataContext";
+import { Button } from "../components/ui/button";
+import { Input } from "../components/ui/input";
+import { Textarea } from "../components/ui/textarea";
+import { useData } from "../context/DataContext";
 import { useAuth } from "@clerk/clerk-react";
 import axios from "axios";
 import UploadFile from "./ui/UploadFile";

@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import completeCourse from "@/lib/db/complete-course";
+import completeCourse from "../../../../lib/db/complete-course";
 export const dynamic = "force-dynamic";
 
 export async function POST(req) {

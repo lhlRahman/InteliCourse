@@ -2,10 +2,10 @@
 
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Button } from "@/components/ui/button";
+import { Button } from "../../../../../components/ui/button";
 import axios from "axios";
-import { useData } from "@/context/DataContext";
-import MultiStepLoader from "@/components/MultiStepLoad";
+import { useData } from "../../../../../context/DataContext";
+import MultiStepLoader from "../../../../../components/MultiStepLoad";
 
 export default function CreateChapter() {
   const [course, setCourse] = useState({ title: "", units: [] });
