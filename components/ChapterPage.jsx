@@ -30,6 +30,8 @@ export default function Course({ course = { units: [] } }) {
   };
 
   const textToSpeech = async (text) => {
+    if (text == null || text === null) return null;
+    console.log(text);
     const res = await axios.post("/api/tts", { text }).then((res) => {
       if (res.data.status === 201) {
         return `data:audio/mpeg;base64,${res.data.data}`;

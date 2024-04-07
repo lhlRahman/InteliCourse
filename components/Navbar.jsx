@@ -1,4 +1,5 @@
-import React from "react";
+"use client"
+
 import { FloatingNavDemo } from "./ui/floating-navbar";
 import { IconHome, IconMessage, IconUser } from "@tabler/icons-react";
 
@@ -6,6 +7,7 @@ import { useUser } from "@clerk/nextjs";
 
 export default function Navbar() {
   const { user } = useUser();
+
 
   const navItems = [
     {

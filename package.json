@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@clerk/nextjs": "^4.29.9",
+    "@clerk/nextjs": "^4.29.12",
     "@google-cloud/vertexai": "^0.5.0",
     "@google/generative-ai": "^0.3.1",
     "@huggingface/inference": "^2.6.4",
