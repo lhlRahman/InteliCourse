@@ -5,6 +5,8 @@ import Course from "../../../components/ChapterPage";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useData } from "../../../context/DataContext";
+import ChatPopup from "../../../components/ChatPopup";
+
 
 const Page = () => {
   const { courseId } = useParams();
@@ -46,8 +48,9 @@ const Page = () => {
   return (
     <div>
       <Course course={course} />
+      <ChatPopup summary={course?.summary} videoQuery={course?.videoQuery} />
     </div>
   );
 };
 
-export default page;
+export default Page;

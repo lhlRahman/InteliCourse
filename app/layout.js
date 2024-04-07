@@ -21,7 +21,7 @@ export default function RootLayout({ children }) {
     // </ClerkProvider>
     <ClerkProvider>
       <DataProvider>
-        <html lang="en">
+        <html lang="en" className="bg-black">
           <body className={inter.className}>
             <AlertWrapper />
             <Navbar />

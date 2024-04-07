@@ -47,7 +47,7 @@ export function UserInputForm() {
       .then((res) => {
         if (res.data.status === 201) {
           setUser(res.data.data);
-          window.location.replace("/dashboard");
+          window.location.replace("/dashboard/courses");
         } else {
           addAlert({ message: res.data.message, type: "error" });
         }

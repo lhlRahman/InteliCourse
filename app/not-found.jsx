@@ -1,14 +1,9 @@
+import { UserButton } from '@clerk/nextjs';
 
-// app/page.js
-"use client";
-import ChatPopup from "../components/ChatPopup";
 export default function Component() {
-
   return (
-    <div className="h-screen w-screen">
-      <div className="w-1/6">
-      <ChatPopup/>
-      </div>
+    <div className='w-screen h-screen grid place-content-center bg-white'>
+      <UserButton />
     </div>
   );
 }

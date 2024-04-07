@@ -11,7 +11,7 @@ export default function CreateChapter() {
   const [course, setCourse] = useState({ title: "", units: [] });
   // get the id from the url
   const { id } = useParams();
-  const { addAlert } = useData();
+  const { addAlert, user } = useData();
   const [chatperNames, setChapterNames] = useState([]);
   const [loading, setLoading] = useState(false);
   const [loadedCount, setLoadedCount] = useState(0);
@@ -60,31 +60,50 @@ export default function CreateChapter() {
 
     setChapterNames(names);
 
+    let success = true;
+
     for (let i = 0; i < ids.length; i++) {
-      await getChapterInfo(ids[i]);
+      if (!(await getChapterInfo(ids[i]))) {
+        setLoading(false);
+        addAlert({
+          message: "Failed to generate chapters",
+          type: "error",
+        });
+        success = false;
+        break;
+      }
+      setLoadedCount((prev) => prev + 1);
+    }
+    if (success) {
+      addAlert({
+        message: "Chapters generated successfully",
+        type: "success",
+      });
+      window.location.replace("/course/" + id);
     }
   };
 
   const getChapterInfo = async (chapterId) => {
-    await axios
+    return await axios
       .post(`/api/chapters/generate`, {
         chapterId: chapterId,
       })
       .then((res) => {
         if (res.data.status === 201) {
-          setLoadedCount((prev) => prev + 1);
           console.log(res.data.data);
+          return true;
         } else {
-          setLoading(false);
           console.log(res.data.message);
           addAlert({
             message: res.data.message,
             type: "error",
           });
+          return false;
         }
       })
       .catch((err) => {
         console.log(err);
+        return false;
       });
   };
 
