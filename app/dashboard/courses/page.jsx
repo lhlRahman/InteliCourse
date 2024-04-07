@@ -23,6 +23,7 @@ export default function AllCourses() {
   const [loading, setLoading] = useState(false);
   const [toggle, setToggle] = useState(false);
 
+
   const onToggle = (e) => {
     setToggle(e.target.checked);
     if (e.target.checked) {
@@ -88,7 +89,11 @@ export default function AllCourses() {
   };
 
   useEffect(() => {
-    if (originalItems.length > 0 && user.bio !== "") {
+    if (!user){
+      window.location.replace("/signin");
+    }
+
+    if (originalItems.length > 0 && user && user.bio && user.bio !== "") {
       sortBasedOnRerank();
     }
   }, [originalItems, user]);

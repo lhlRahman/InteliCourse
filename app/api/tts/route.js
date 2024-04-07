@@ -5,7 +5,7 @@ export async function POST(req) {
     try {
       const { text } = await req.json();
       const response = await fetch(
-        `https://texttospeech.googleapis.com/v1beta1/text:synthesize?key=AIzaSyDaR-UMlk1OiYgM3TmsLcZSrA6s6rEMtGA`,
+        `https://texttospeech.googleapis.com/v1beta1/text:synthesize?key=${process.env.TTS}`,
         {
           method: "POST",
           headers: {

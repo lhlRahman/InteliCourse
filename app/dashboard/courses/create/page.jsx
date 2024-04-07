@@ -8,6 +8,7 @@ import { MdDeleteForever } from "react-icons/md";
 
 export default function CreateCourse() {
   const { user, addAlert } = useData();
+
   const [inputs, setInputs] = useState({
     title: "",
     units: [""],

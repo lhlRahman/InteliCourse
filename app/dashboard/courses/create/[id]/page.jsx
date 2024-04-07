@@ -11,7 +11,7 @@ export default function CreateChapter() {
   const [course, setCourse] = useState({ title: "", units: [] });
   // get the id from the url
   const { id } = useParams();
-  const { addAlert } = useData();
+  const { addAlert, user } = useData();
   const [chatperNames, setChapterNames] = useState([]);
   const [loading, setLoading] = useState(false);
   const [loadedCount, setLoadedCount] = useState(0);
