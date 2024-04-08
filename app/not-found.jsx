@@ -15,7 +15,7 @@ export default function Component() {
             Oops! You seem lost.
           </p>
           <p className="mt-2 text-sm md:text-lg text-blue-500">
-            The page you're looking for went to Learn, you should too.
+            The page you are looking for went to Learn, you should too.
           </p>
         </div>
         <div className="mt-8 flex justify-center space-x-4">
