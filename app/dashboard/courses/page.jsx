@@ -46,6 +46,7 @@ export default function AllCourses() {
       .get("/api/courses/getAll")
       .then((response) => {
         const data = response.data;
+        console.log(data);
         if (data.status != 201) {
           addAlert({
             message:
