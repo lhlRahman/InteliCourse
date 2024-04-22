@@ -52,6 +52,7 @@ export default function AllCourses() {
               "There was an error fetching courses. Please reload the page.",
             type: "error",
           });
+          console.log(data)
           setOriginalItems([]);
         } else {
           setOriginalItems(data.data.map(createItemPoster));

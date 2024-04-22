@@ -20,7 +20,7 @@ export default function Contact() {
   );
 }
 
-export const projects = [
+const projects = [
   {
     title: "Habib Rahman",
     description:
