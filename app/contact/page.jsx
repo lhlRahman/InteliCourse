@@ -1,7 +1,21 @@
-"use client"
 import { HoverEffect } from "../../components/ui/card-hover-effect";
 
 export default function Contact() {
+  const projects = [
+    {
+      title: "Habib Rahman",
+      description:
+        "During the hackathon, I was responsible for designing and implementing the database architecture, as well as contributing to both the frontend and backend development.",
+      link: "https://habibrahman.xyz",
+    },
+    {
+      title: "Arshia Zakeri",
+      description:
+        "I took charge of seamlessly integrating front-end and backend systems, incorporating Semantic search functionality, implementing robust authentication mechanisms, and optimizing overall system performance.",
+      link: "https://github.com/ArshiaZr",
+    },
+  ];
+
   return (
     <div
       style={{ paddingTop: "6rem" }}
@@ -19,18 +33,3 @@ export default function Contact() {
     </div>
   );
 }
-
-const projects = [
-  {
-    title: "Habib Rahman",
-    description:
-      "During the hackathon, I was responsible for designing and implementing the database architecture, as well as contributing to both the frontend and backend development.",
-    link: "https://habibrahman.xyz",
-  },
-  {
-    title: "Arshia Zakeri",
-    description:
-      "I took charge of seamlessly integrating front-end and backend systems, incorporating Semantic search functionality, implementing robust authentication mechanisms, and optimizing overall system performance.",
-    link: "https://github.com/ArshiaZr",
-  },
-];
