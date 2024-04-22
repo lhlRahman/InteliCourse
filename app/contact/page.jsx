@@ -1,7 +1,7 @@
 import { HoverEffect } from "../../components/ui/card-hover-effect";
 
 export default function Contact() {
-  const projects = [
+  const roles = [
     {
       title: "Habib Rahman",
       description:
@@ -27,7 +27,7 @@ export default function Contact() {
           Contact Us
         </p>
         <div className="max-w-7xl mx-auto px-8">
-          <HoverEffect items={projects} />
+          <HoverEffect items={roles} />
         </div>
       </div>
     </div>
