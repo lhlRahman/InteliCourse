@@ -87,8 +87,10 @@ export default function CreateCourse() {
   };
 
   return (
-    <div className="bg-[#1a1a1a] pt-24 flex justify-center items-center min-h-screen">
-      {loading && (
+    <div className="bg-[#1a1a1a] pt-24 flex justify-center items-center flex-col min-h-screen">
+      <h1 className=" text-3xl mb-10 text-white">May Run Out Of Open AI Credits, check demo here </h1>
+      <iframe width="630" className="mb-10" height="310" src="https://www.youtube.com/embed/tHvKDVCTkUQ" title="IntelliCourse GenAI Hackathon submission" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+{loading && (
         <div className="fixed w-screen h-screen flex justify-center items-center bg-[#000000b3]">
           <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-white"></div>
         </div>
